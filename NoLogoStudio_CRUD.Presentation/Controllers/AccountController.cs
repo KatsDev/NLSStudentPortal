@@ -17,15 +17,13 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        //private IRepository<Customer> _customer;
 
-        public AccountController()
+        public AccountController(/*IRepository<Customer> customer*/)
         {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            //UserManager = userManager;
+            //SignInManager = signInManager;
+            //_customer = customer;
         }
 
         public ApplicationSignInManager SignInManager
@@ -34,9 +32,9 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -58,7 +56,7 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return PartialView();
         }
 
         //
@@ -70,7 +68,7 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
 
             // This doesn't count login failures towards account lockout
@@ -81,13 +79,13 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return PartialView("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return PartialView(model);
             }
         }
 
@@ -120,7 +118,7 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -139,7 +137,7 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -155,8 +153,26 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //register customer account
+
+                    //Customer customer = new Customer()
+                    //{
+                    //    City = model.City,
+                    //    Email = model.Email,
+                    //    FirstName = model.FirstName,
+                    //    LastName = model.LastName,
+                    //    State = model.State,
+                    //    Street = model.Street,
+                    //    StreetNumber = model.StreetNumber,
+                    //    ZipCode = model.ZipCode,
+                    //    UserId = user.Id
+                    //};
+
+                    //_customer.Insert(customer);
+                    //_customer.Commit();
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

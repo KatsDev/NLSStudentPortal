@@ -57,17 +57,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NoLogoStudio_CRUD.Core\NoLogoStudio_CRUD.Core.csproj">
-      <Project>{846494d5-0971-4449-83be-d4fec8217ab0}</Project>
-      <Name>NoLogoStudio_CRUD.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NoLogoStudio_CRUD.Presentation\NoLogoStudio_CRUD.Presentation.csproj">
       <Project>{5e1f6e93-ef96-4e01-8ca0-64f519b49534}</Project>
       <Name>NoLogoStudio_CRUD.Presentation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NoLogoStudio_CRUD.Services\NoLogoStudio_CRUD.Services.csproj">
-      <Project>{3d6e9430-08e3-4957-9569-c8ddbc78c1d8}</Project>
-      <Name>NoLogoStudio_CRUD.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

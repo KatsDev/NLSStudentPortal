@@ -10,21 +10,28 @@ namespace NoLogoStudio_CRUD.Presentation.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if(Request.IsAjaxRequest())
+            {
+                return PartialView();
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return PartialView();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return PartialView();
         }
     }
 }
